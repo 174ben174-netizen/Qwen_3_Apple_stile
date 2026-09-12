@@ -28,7 +28,7 @@
   --ease:cubic-bezier(.32,.72,.24,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-padding-top:84px}
+html{scroll-padding-top:116px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{font-family:var(--font-body);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%;background:var(--bg-2)}
@@ -74,6 +74,7 @@ h1,h2,h3,.display{font-family:var(--font-display);letter-spacing:-.03em;line-hei
 .burger{display:none;background:none;border:0;cursor:pointer;width:40px;height:40px;position:relative;z-index:110}
 .burger span{position:absolute;left:10px;width:20px;height:1.5px;background:var(--ink);transition:transform .4s var(--ease),opacity .3s,top .4s}
 .burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:22px}
+body.nav-open .header-actions{opacity:0;pointer-events:none}
 body.nav-open .burger span:nth-child(1){top:19px;transform:rotate(45deg)}
 body.nav-open .burger span:nth-child(2){top:19px;transform:rotate(-45deg)}
 .nav-scrim{position:fixed;inset:0;background:rgba(23,14,8,.3);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:80;opacity:0;pointer-events:none;transition:opacity .4s}
@@ -153,6 +154,60 @@ body.nav-open{overflow:hidden}
 .drink-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;width:100%;padding-top:1rem}
 .price{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--honey)}
 .drink-meta{font-size:.75rem;color:rgba(250,243,231,.45)}
+.menu-filters{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-bottom:2.2rem}
+.filter-pill{font-family:var(--font-display);font-weight:600;font-size:.82rem;padding:.55rem 1.25rem;border-radius:999px;border:1px solid rgba(250,243,231,.18);background:transparent;color:rgba(250,243,231,.65);cursor:pointer;transition:all .3s var(--ease)}
+.filter-pill:hover{border-color:var(--honey);color:var(--cream)}
+.filter-pill.on{background:var(--cream);border-color:var(--cream);color:var(--dark)}
+.add-btn{margin-top:1rem;width:100%;padding:.8rem 1rem;border-radius:999px;border:0;cursor:pointer;font-family:var(--font-display);font-weight:700;font-size:.85rem;background:rgba(250,243,231,.1);color:var(--cream);transition:background .3s,transform .3s var(--ease)}
+.add-btn:hover{background:var(--honey);color:var(--dark);transform:scale(1.02)}
+.add-btn:active{transform:scale(.98)}
+/* ---------- промо-полоса ---------- */
+.promo{position:fixed;inset:0 0 auto;z-index:120;background:var(--dark);color:rgba(250,243,231,.85);font-size:.72rem;text-align:center;padding:.45rem 1rem;letter-spacing:.02em}
+.promo b{color:var(--honey)}
+.site-header{top:29px}
+@media(max-width:560px){.site-header{top:0}.promo{display:none}}
+/* ---------- корзина ---------- */
+.header-actions{display:flex;align-items:center;gap:.7rem;margin-left:.5rem}
+.cart-btn{position:relative;width:38px;height:38px;border-radius:50%;border:1px solid var(--hair);background:transparent;cursor:pointer;display:grid;place-items:center;transition:border-color .3s,transform .3s var(--ease)}
+.cart-btn:hover{border-color:var(--bronze);transform:scale(1.05)}
+.cart-btn svg{width:17px;height:17px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cart-count{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:var(--bronze);color:#fff;font-family:var(--font-display);font-size:.65rem;font-weight:700;display:grid;place-items:center;padding:0 4px;transition:transform .2s}
+.cart-count.pop{transform:scale(1.35)}
+/* ---------- модалка ---------- */
+.modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:1rem;background:rgba(23,14,8,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .35s}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-card{width:min(430px,100%);background:var(--bg);border-radius:28px;padding:1.8rem;box-shadow:0 40px 80px -20px rgba(0,0,0,.35);transform:translateY(16px) scale(.98);transition:transform .35s var(--ease)}
+.modal.open .modal-card{transform:none}
+.modal-card h3{font-size:1.4rem;font-weight:800}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.modal-x{width:32px;height:32px;border-radius:50%;border:1px solid var(--hair);background:none;cursor:pointer;font-size:1rem;line-height:1}
+.cart-list{display:grid;gap:.6rem;max-height:240px;overflow:auto;margin-bottom:1rem}
+.cart-empty{text-align:center;color:var(--ink-3);font-size:.9rem;padding:1.4rem 0}
+.cart-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--bg-2);border-radius:14px;padding:.6rem .8rem;font-size:.85rem}
+.cart-row b{display:block}
+.cart-row small{color:var(--ink-3)}
+.qty{display:flex;align-items:center;gap:.5rem}
+.qty button{width:24px;height:24px;border-radius:50%;border:1px solid var(--hair);background:#fff;cursor:pointer;font-weight:700}
+.cart-total{display:flex;justify-content:space-between;font-family:var(--font-display);font-weight:800;font-size:1.05rem;padding:.9rem 0;border-top:1px solid var(--hair)}
+.field{width:100%;padding:.85rem 1rem;border-radius:14px;border:1px solid var(--hair);background:#fff;font-family:var(--font-body);font-size:.9rem;outline:none;transition:border-color .3s,box-shadow .3s}
+.field:focus{border-color:var(--bronze);box-shadow:0 0 0 3px rgba(180,118,59,.15)}
+.modal-card .btn{width:100%;margin-top:.7rem}
+.form-ok{display:none;text-align:center;color:#1d7a3a;font-size:.85rem;font-weight:600;margin-top:.7rem}
+.form-ok.show{display:block}
+/* ---------- бронирование ---------- */
+.booking-card{display:grid;grid-template-columns:1fr 1.2fr;border-radius:var(--r-lg);overflow:hidden;background:#fff;border:1px solid var(--hair);box-shadow:0 40px 80px -40px rgba(29,19,12,.25)}
+.booking-side{background:var(--dark);color:var(--cream);padding:clamp(2rem,4vw,3rem)}
+.booking-side .eyebrow{color:var(--honey);margin-bottom:1rem}
+.booking-side h3{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:800;margin-bottom:1rem}
+.booking-side p{font-size:.92rem;color:rgba(250,243,231,.65);margin-bottom:1.6rem}
+.booking-side li{display:flex;gap:.7rem;align-items:center;font-size:.88rem;padding:.5rem 0;color:rgba(250,243,231,.85)}
+.booking-side li i{width:22px;height:22px;flex:none;border-radius:50%;background:rgba(224,164,88,.18);color:var(--honey);display:grid;place-items:center;font-style:normal;font-size:.75rem}
+.booking-form{padding:clamp(2rem,4vw,3rem);display:grid;gap:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-row.trio{grid-template-columns:1fr 1fr 1fr}
+.booking-form label{display:grid;gap:.4rem;font-family:var(--font-display);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+@media(max-width:960px){.booking-card{grid-template-columns:1fr}.form-row.trio{grid-template-columns:1fr}}
+@media(max-width:560px){.form-row{grid-template-columns:1fr}}
 
 /* ---------- атмосфера ---------- */
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
@@ -228,6 +283,8 @@ body.nav-open{overflow:hidden}
 
 <div class="nav-scrim" id="navScrim"></div>
 
+<div class="promo"><b>Свежая выпечка из печи</b> · каждое утро с 08:00 тёплые пончики и свежий фильтр-кофе · <b>+7 (495) 123-45-67</b></div>
+
 <header class="site-header" id="siteHeader">
   <div class="container nav-wrap">
     <a class="brand" href="#top" aria-label="На главную">
@@ -239,9 +296,15 @@ body.nav-open{overflow:hidden}
       <span class="brand-text">Два пончика<small>и чашка кофе</small></span>
     </a>
     <nav class="main-nav" id="mainNav" aria-label="Основная навигация">
-      <a href="#about">О нас</a><a href="#menu">Меню</a><a href="#vibe">Атмосфера</a><a href="#contacts">Контакты</a>
+      <a href="#about">О нас</a><a href="#menu">Меню</a><a href="#vibe">Атмосфера</a><a href="#booking">Бронь</a><a href="#contacts">Контакты</a>
     </nav>
-    <a class="btn btn--primary header-cta" href="#contacts">Забронировать</a>
+    <div class="header-actions">
+    <button class="cart-btn" id="cartBtn" aria-label="Открыть корзину" onclick="toggleCart(true)">
+      <svg viewBox="0 0 24 24"><path d="M6 8h15l-1.5 8h-12z"/><path d="M6 8l-1-3H3"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <a class="btn btn--primary header-cta" href="#booking">Забронировать</a>
+    </div>
     <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span></button>
   </div>
 </header>
@@ -308,16 +371,22 @@ body.nav-open{overflow:hidden}
   </div>
 </section>
 
-<!-- МЕНЮ: три карточки в один ряд -->
+<!-- МЕНЮ: шесть позиций + фильтр + заказ -->
 <section class="section menu" id="menu">
   <div class="container">
     <div class="sec-head reveal">
-      <p class="eyebrow">Фирменные напитки</p>
-      <h2>Три причины вернуться.</h2>
-      <p>Короткое меню, в котором всё — на своём месте.</p>
+      <p class="eyebrow">Кофейная карта и выпечка</p>
+      <h2>Фирменное меню.</h2>
+      <p>Короткое меню, в котором всё на своём месте.</p>
     </div>
-    <div class="menu-grid">
-      <article class="drink reveal">
+    <div class="menu-filters reveal" role="tablist" aria-label="Категории меню">
+      <button class="filter-pill on" onclick="filterMenu('all',this)">Все позиции</button>
+      <button class="filter-pill" onclick="filterMenu('coffee',this)">Кофе</button>
+      <button class="filter-pill" onclick="filterMenu('donuts',this)">Пончики</button>
+      <button class="filter-pill" onclick="filterMenu('tea',this)">Без кофеина</button>
+    </div>
+    <div class="menu-grid" id="menuGrid">
+      <article class="drink reveal" data-cat="coffee">
         <div class="drink-img">
           <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/0aaa7c127-3152-4f4b-a862-73acc8f034e29255.png"
                data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e29089.png"
@@ -326,12 +395,13 @@ body.nav-open{overflow:hidden}
         </div>
         <div class="drink-body">
           <h3>Раф «Два пончика»</h3>
-          <p>Сливочный раф на домашнем сиропе из глазированного пончика. Корица, сахарная крошка и мини-пончик в подарок.</p>
+          <p>Сливочный раф на домашней карамели и корице. Сверху сахарная крошка и мини-пончик в подарок.</p>
           <div class="drink-foot"><span class="price">340 ₽</span><span class="drink-meta">фирменный · 300 мл</span></div>
+          <button class="add-btn" onclick="addToCart('Раф «Два пончика»',340)">+ В заказ</button>
         </div>
       </article>
 
-      <article class="drink reveal" style="--d:.1s">
+      <article class="drink reveal" style="--d:.1s" data-cat="coffee">
         <div class="drink-img">
           <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e29940.png"
                data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/4aaa7c127-3152-4f4b-a862-73acc8f034e28873.png"
@@ -340,12 +410,13 @@ body.nav-open{overflow:hidden}
         </div>
         <div class="drink-body">
           <h3>Фильтр «Утренняя смена»</h3>
-          <p>Зерно свежей обжарки. Воронка или аэропресс — три сорта каждый день.</p>
-          <div class="drink-foot"><span class="price">250 ₽</span><span class="drink-meta">чёрный · 250 мл</span></div>
+          <p>Эфиопия Иргачеффе мытой обработки. Ноты бергамота, абрикоса и чёрного чая.</p>
+          <div class="drink-foot"><span class="price">250 ₽</span><span class="drink-meta">чистый вкус · 250 мл</span></div>
+          <button class="add-btn" onclick="addToCart('Фильтр «Утренняя смена»',250)">+ В заказ</button>
         </div>
       </article>
 
-      <article class="drink reveal" style="--d:.2s">
+      <article class="drink reveal" style="--d:.2s" data-cat="tea">
         <div class="drink-img">
           <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/4aaa7c127-3152-4f4b-a862-73acc8f034e28699.png"
                data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/2aaa7c127-3152-4f4b-a862-73acc8f034e28919.png"
@@ -353,16 +424,58 @@ body.nav-open{overflow:hidden}
           <span class="drink-tag">Без кофеина</span>
         </div>
         <div class="drink-body">
-          <h3>Какао «Пончик без кофе»</h3>
-          <p>Бельгийский шоколад, маршмелло и домашняя карамель. Для всех, кто не про кофе.</p>
-          <div class="drink-foot"><span class="price">260 ₽</span><span class="drink-meta">для всех · 280 мл</span></div>
+          <h3>Какао «Шоколадный шёлк»</h3>
+          <p>Бельгийский шоколад 70%, солёная карамель и шапочка из маршмеллоу.</p>
+          <div class="drink-foot"><span class="price">260 ₽</span><span class="drink-meta">для уюта · 280 мл</span></div>
+          <button class="add-btn" onclick="addToCart('Какао «Шоколадный шёлк»',260)">+ В заказ</button>
+        </div>
+      </article>
+      <article class="drink reveal" data-cat="donuts">
+        <div class="drink-img">
+          <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/0aaa7c127-3152-4f4b-a862-73acc8f034e28611.png"
+               data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/5aaa7c127-3152-4f4b-a862-73acc8f034e25599.png"
+               alt="Свежие глазированные пончики на решётке" loading="lazy" decoding="async" width="800" height="500">
+          <span class="drink-tag">Из печи в 8:30</span>
+        </div>
+        <div class="drink-body">
+          <h3>Сет «Два глазированных»</h3>
+          <p>Классические дрожжевые пончики ручной формовки. Тонкая ванильная глазурь и воздушная сердцевина.</p>
+          <div class="drink-foot"><span class="price">220 ₽</span><span class="drink-meta">2 шт · 150 г</span></div>
+          <button class="add-btn" onclick="addToCart('Сет «Два глазированных»',220)">+ В заказ</button>
+        </div>
+      </article>
+
+      <article class="drink reveal" style="--d:.08s" data-cat="coffee">
+        <div class="drink-img">
+          <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/9aaa7c127-3152-4f4b-a862-73acc8f034e24313.png"
+               data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/8aaa7c127-3152-4f4b-a862-73acc8f034e21174.png"
+               alt="Флэт уайт с латте-артом на кокосовом молоке" loading="lazy" decoding="async" width="800" height="500">
+        </div>
+        <div class="drink-body">
+          <h3>Флэт Уайт на кокосовом</h3>
+          <p>Двойной шот насыщенного эспрессо и шелковистая микропенка на натуральном кокосовом молоке.</p>
+          <div class="drink-foot"><span class="price">290 ₽</span><span class="drink-meta">двойной эспрессо · 200 мл</span></div>
+          <button class="add-btn" onclick="addToCart('Флэт Уайт на кокосовом',290)">+ В заказ</button>
+        </div>
+      </article>
+
+      <article class="drink reveal" style="--d:.16s" data-cat="donuts">
+        <div class="drink-img">
+          <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/0aaa7c127-3152-4f4b-a862-73acc8f034e29255.png"
+               data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e29089.png"
+               alt="Берлинер с фисташковым кремом и сахарной пудрой" loading="lazy" decoding="async" width="800" height="500">
+          <span class="drink-tag">Новинка</span>
+        </div>
+        <div class="drink-body">
+          <h3>Берлинер «Сицилийская фисташка»</h3>
+          <p>Пышный пончик с заварным кремом и 100% фисташковой пастой. Посыпка из дроблёной фисташки.</p>
+          <div class="drink-foot"><span class="price">260 ₽</span><span class="drink-meta">1 шт · 110 г</span></div>
+          <button class="add-btn" onclick="addToCart('Берлинер «Сицилийская фисташка»',260)">+ В заказ</button>
         </div>
       </article>
     </div>
   </div>
 </section>
-
-<!-- АТМОСФЕРА -->
 <section class="section" id="vibe">
   <div class="container">
     <div class="sec-head reveal">
@@ -391,11 +504,42 @@ body.nav-open{overflow:hidden}
     </div>
 
     <div class="quote-box reveal" id="quoteBox">
-      <blockquote class="quote-slide is-active"><p>«Раф „Два пончика“ — это незаконно вкусно. Прихожу трижды в неделю.»</p><cite>— Аня, дизайнер</cite></blockquote>
-      <blockquote class="quote-slide"><p>«Лучший фильтр в районе. И пончики ещё тёплые к открытию.»</p><cite>— Игорь, фотограф</cite></blockquote>
-      <blockquote class="quote-slide"><p>«Место, где помнят, что ты пьёшь. Это дорогого стоит.»</p><cite>— Мария, студентка</cite></blockquote>
-      <blockquote class="quote-slide"><p>«Пришли на одну чашку — просидели три часа. Уютно, как дома.»</p><cite>— Сергей, разработчик</cite></blockquote>
+      <blockquote class="quote-slide is-active"><p>«Раф „Два пончика“ — это преступно вкусно! Бариста уже наливает мой кофе, едва я переступаю порог.»</p><cite>— Анна Мельникова, дизайнер интерьеров</cite></blockquote>
+      <blockquote class="quote-slide"><p>«Лучший фильтр-кофе на Чистых прудах. Зерно всегда свежее, а тёплые пончики к открытию — чистый дофамин.»</p><cite>— Игорь Лавров, фотограф</cite></blockquote>
+      <blockquote class="quote-slide"><p>«Пришли с ноутбуками на часок — просидели полдня. Удобные кресла и очень доброжелательные ребята.»</p><cite>— Сергей и Катя, IT-команда</cite></blockquote>
       <div class="quote-dots" role="tablist" aria-label="Отзывы"></div>
+    </div>
+  </div>
+</section>
+
+<!-- БРОНИРОВАНИЕ -->
+<section class="section" id="booking" style="padding-top:1rem">
+  <div class="container">
+    <div class="booking-card reveal">
+      <div class="booking-side">
+        <p class="eyebrow">Онлайн-резерв</p>
+        <h3>Забронировать столик</h3>
+        <p>Для деловой встречи, работы за ноутбуком или уютного свидания с пончиками.</p>
+        <ul>
+          <li><i>✓</i>Бронь держится 20 минут</li>
+          <li><i>✓</i>Розетка и Wi-Fi у стола</li>
+          <li><i>✓</i>Подтверждение по SMS / Telegram</li>
+        </ul>
+      </div>
+      <form class="booking-form" id="bookingForm" onsubmit="handleBooking(event)">
+        <div class="form-row">
+          <label>Ваше имя<input class="field" required placeholder="Александр"></label>
+          <label>Телефон<input class="field" required type="tel" placeholder="+7 (999) 000-00-00"></label>
+        </div>
+        <div class="form-row trio">
+          <label>Дата<input class="field" id="bookDate" required type="date"></label>
+          <label>Время<select class="field"><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option selected>18:30</option><option>20:00</option></select></label>
+          <label>Гостей<select class="field"><option>1 человек</option><option selected>2 человека</option><option>3-4 человека</option><option>5+ человек</option></select></label>
+        </div>
+        <label>Пожелания<input class="field" placeholder="У окна, тихий угол, детский стульчик..."></label>
+        <button class="btn btn--primary" type="submit">Подтвердить бронирование</button>
+        <p class="form-ok" id="bookingOk">✓ Заявка отправлена! Свяжемся с вами в течение 5 минут.</p>
+      </form>
     </div>
   </div>
 </section>
@@ -441,12 +585,26 @@ body.nav-open{overflow:hidden}
         <span class="brand-text">Два пончика<small>и чашка кофе</small></span>
       </a>
       <nav aria-label="Навигация в подвале">
-        <a href="#about">О нас</a><a href="#menu">Меню</a><a href="#vibe">Атмосфера</a><a href="#contacts">Контакты</a>
+        <a href="#about">О нас</a><a href="#menu">Меню</a><a href="#vibe">Атмосфера</a><a href="#booking">Бронь</a><a href="#contacts">Контакты</a>
       </nav>
     </div>
     <small>© 2026 Кофейня «Два пончика и чашка кофе». Сделано с любовью и кофеином. Все права защищены.</small>
   </div>
 </footer>
+
+<div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-label="Корзина">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Ваш заказ с собой</h3>
+      <button class="modal-x" onclick="toggleCart(false)" aria-label="Закрыть">×</button>
+    </div>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-total"><span>Итого к оплате:</span><span id="cartTotal">0 ₽</span></div>
+    <input class="field" id="cartPhone" type="tel" placeholder="Ваш телефон для SMS-готовности">
+    <button class="btn btn--primary" onclick="submitOrder()">Оформить предзаказ к приходу</button>
+    <p class="form-ok" id="orderOk">✓ Заказ принят! Бариста начнёт готовить его к вашему приходу.</p>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -527,6 +685,21 @@ body.nav-open{overflow:hidden}
   }, {rootMargin:'-45% 0px -50% 0px'});
   document.querySelectorAll('section[id]').forEach(s => aio.observe(s));
 
+  /* дата брони: сегодня и не раньше */
+  const bookDate = document.getElementById('bookDate');
+  if (bookDate){
+    const today = new Date().toISOString().split('T')[0];
+    bookDate.value = today;
+    bookDate.min = today;
+  }
+
+  /* закрытие корзины по фону и Esc */
+  const cartModal = document.getElementById('cartModal');
+  if (cartModal){
+    cartModal.addEventListener('click', e => { if (e.target === cartModal) toggleCart(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleCart(false); });
+  }
+
   /* ротатор отзывов */
   const box = document.getElementById('quoteBox');
   const slides = box.querySelectorAll('.quote-slide');
@@ -551,6 +724,68 @@ body.nav-open{overflow:hidden}
   }
   restart();
 })();
+
+/* фильтр меню */
+function filterMenu(cat, btn){
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  document.querySelectorAll('#menuGrid .drink').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+/* корзина */
+let cart = [];
+function addToCart(title, price){
+  const found = cart.find(i => i.title === title);
+  if (found) found.qty += 1; else cart.push({title, price, qty:1});
+  updateCart();
+  const badge = document.getElementById('cartCount');
+  badge.classList.add('pop');
+  setTimeout(() => badge.classList.remove('pop'), 220);
+}
+function changeQty(idx, delta){
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  updateCart();
+}
+function updateCart(){
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  const total = cart.reduce((s,i) => s + i.qty * i.price, 0);
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = total.toLocaleString('ru-RU') + ' ₽';
+  const list = document.getElementById('cartList');
+  if (!cart.length){
+    list.innerHTML = '<p class="cart-empty">Ваша корзина пока пуста.<br>Выберите блюда или напитки из меню!</p>';
+    return;
+  }
+  list.innerHTML = cart.map((i, idx) =>
+    '<div class="cart-row"><div><b>' + i.title + '</b><small>' + i.price + ' ₽ × ' + i.qty + ' шт</small></div>' +
+    '<div class="qty"><button onclick="changeQty(' + idx + ',-1)" aria-label="Меньше">−</button><span>' + i.qty + '</span><button onclick="changeQty(' + idx + ',1)" aria-label="Больше">+</button></div></div>'
+  ).join('');
+}
+function toggleCart(open){
+  document.getElementById('cartModal').classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function submitOrder(){
+  if (!cart.length){ alert('Добавьте позиции в заказ!'); return; }
+  const ok = document.getElementById('orderOk');
+  ok.classList.add('show');
+  setTimeout(() => { cart = []; updateCart(); ok.classList.remove('show'); toggleCart(false); }, 2000);
+}
+
+/* бронирование */
+function handleBooking(e){
+  e.preventDefault();
+  const ok = document.getElementById('bookingOk');
+  ok.classList.add('show');
+  e.target.reset();
+  const bd = document.getElementById('bookDate');
+  if (bd) bd.value = new Date().toISOString().split('T')[0];
+  setTimeout(() => ok.classList.remove('show'), 5000);
+}
+updateCart();
 </script>
 </body>
 </html>
