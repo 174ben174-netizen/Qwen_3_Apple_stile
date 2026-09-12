@@ -1,0 +1,556 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Два пончика и чашка кофе — специализированная кофейня</title>
+<meta name="description" content="Кофейня «Два пончика и чашка кофе»: собственная обжарка, свежие пончики каждое утро и кофе, ради которого хочется просыпаться.">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F6;
+  --bg-2:#F3EFE8;
+  --ink:#1D130C;
+  --ink-2:#5C4A3A;
+  --ink-3:rgba(29,19,12,.56);
+  --hair:rgba(29,19,12,.09);
+  --bronze:#B4763B;
+  --honey:#E0A458;
+  --dark:#170E08;
+  --dark-2:#241811;
+  --cream:#FAF3E7;
+  --r-lg:32px; --r-md:24px; --r-sm:16px;
+  --font-display:'Manrope', system-ui, sans-serif;
+  --font-body:'Golos Text', system-ui, sans-serif;
+  --ease:cubic-bezier(.32,.72,.24,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:84px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%;background:var(--bg-2)}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+::selection{background:var(--honey);color:var(--ink)}
+:focus-visible{outline:2px solid var(--bronze);outline-offset:4px;border-radius:4px}
+.container{width:min(1120px,92%);margin-inline:auto}
+h1,h2,h3,.display{font-family:var(--font-display);letter-spacing:-.03em;line-height:1.05}
+
+.img-ph{width:100%;height:100%;display:grid;place-items:center;align-content:center;gap:.5rem;background:linear-gradient(180deg,var(--bg-2),#E9E1D3);color:var(--ink-3);text-align:center;padding:1.2rem}
+.img-ph svg{width:40px;height:40px;opacity:.6}
+.img-ph span{font-size:.85rem;max-width:24ch}
+
+@media (prefers-reduced-motion:no-preference){
+  html.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+  html.js .reveal.in{opacity:1;transform:none}
+}
+
+/* ---------- кнопки в стиле Apple ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--font-display);font-weight:600;font-size:.95rem;letter-spacing:-.01em;padding:.85rem 1.6rem;border-radius:999px;border:0;cursor:pointer;transition:transform .3s var(--ease),opacity .3s,box-shadow .3s}
+.btn--primary{background:var(--ink);color:var(--cream)}
+.btn--primary:hover{transform:scale(1.03);opacity:.92}
+.btn--primary:active{transform:scale(.98)}
+.link-arrow{font-family:var(--font-display);font-weight:600;font-size:.95rem;color:var(--bronze);display:inline-flex;align-items:center;gap:.35rem;transition:gap .3s var(--ease)}
+.link-arrow:hover{gap:.6rem}
+.link-arrow::after{content:'›';font-size:1.2em;line-height:1}
+
+/* ---------- навигация: матовое стекло ---------- */
+.site-header{position:fixed;inset:0 0 auto;z-index:100;background:rgba(250,249,246,.72);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid transparent;transition:border-color .4s}
+.site-header.scrolled{border-color:var(--hair)}
+.nav-wrap{display:flex;align-items:center;gap:2rem;height:56px}
+.brand{display:flex;align-items:center;gap:.6rem;margin-right:auto}
+.brand-mark{width:26px;height:26px;flex:none}
+.brand-text{font-family:var(--font-display);font-weight:700;font-size:.92rem;letter-spacing:-.02em}
+.brand-text small{display:block;font-weight:500;font-size:.68rem;color:var(--ink-3);letter-spacing:.02em}
+.main-nav{display:flex;gap:2rem}
+.main-nav a{font-size:.82rem;font-weight:500;color:var(--ink-2);transition:color .25s;position:relative}
+.main-nav a::after{content:'';position:absolute;left:50%;bottom:-4px;width:4px;height:4px;border-radius:50%;background:var(--bronze);transform:translateX(-50%) scale(0);transition:transform .3s var(--ease)}
+.main-nav a:hover,.main-nav a.active{color:var(--ink)}
+.main-nav a.active::after{transform:translateX(-50%) scale(1)}
+.header-cta{font-size:.8rem;padding:.55rem 1.15rem}
+.burger{display:none;background:none;border:0;cursor:pointer;width:40px;height:40px;position:relative;z-index:110}
+.burger span{position:absolute;left:10px;width:20px;height:1.5px;background:var(--ink);transition:transform .4s var(--ease),opacity .3s,top .4s}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:22px}
+body.nav-open .burger span:nth-child(1){top:19px;transform:rotate(45deg)}
+body.nav-open .burger span:nth-child(2){top:19px;transform:rotate(-45deg)}
+.nav-scrim{position:fixed;inset:0;background:rgba(23,14,8,.3);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:80;opacity:0;pointer-events:none;transition:opacity .4s}
+body.nav-open .nav-scrim{opacity:1;pointer-events:auto}
+body.nav-open{overflow:hidden}
+
+/* ---------- герой ---------- */
+.hero{padding:clamp(7.5rem,16vh,10rem) 0 clamp(3rem,6vw,5rem);text-align:center}
+.eyebrow{font-family:var(--font-display);font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--bronze);margin-bottom:1.4rem}
+.hero h1{font-size:clamp(2.9rem,7.6vw,6.2rem);font-weight:800;margin-bottom:1.6rem}
+.hero h1 .accent{color:var(--bronze)}
+.hero-sub{font-size:clamp(1.05rem,1.6vw,1.3rem);color:var(--ink-3);max-width:42rem;margin:0 auto 2.4rem}
+.hero-actions{display:flex;justify-content:center;align-items:center;gap:2rem;flex-wrap:wrap}
+.hero-visual{position:relative;margin-top:clamp(3rem,6vw,4.5rem);border-radius:var(--r-lg);overflow:hidden;aspect-ratio:21/10;box-shadow:0 40px 80px -40px rgba(29,19,12,.35)}
+.hero-visual img{width:100%;height:100%;object-fit:cover}
+@media (prefers-reduced-motion:no-preference){.kenburns img{animation:kb 22s ease-in-out infinite alternate}}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1) translate(-1.5%,1.5%)}}
+.chip{position:absolute;display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:999px;background:rgba(23,14,8,.42);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--cream);font-family:var(--font-display);font-size:.75rem;font-weight:600;letter-spacing:.01em}
+.chip--left{left:1.4rem;bottom:1.4rem}
+.chip--right{right:1.4rem;top:1.4rem}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--honey)}
+.steam{position:absolute;top:6%;left:52%;display:flex;gap:10px;z-index:2}
+.steam i{width:8px;height:52px;border-radius:50%;filter:blur(5px);opacity:0;background:linear-gradient(to top,transparent,rgba(255,250,240,.9))}
+@media (prefers-reduced-motion:no-preference){
+  .steam i{animation:steam 3.6s ease-in-out infinite}
+  .steam i:nth-child(2){animation-delay:1.2s;height:62px}
+  .steam i:nth-child(3){animation-delay:2.1s}
+}
+@keyframes steam{0%{opacity:0;transform:translateY(16px)}25%{opacity:.8}60%{opacity:.4;transform:translateY(-26px) translateX(6px)}100%{opacity:0;transform:translateY(-56px) translateX(-5px) scaleX(1.5)}}
+
+/* ---------- полоса фактов ---------- */
+.facts{border-block:1px solid var(--hair)}
+.facts-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.fact{padding:2.2rem 1.5rem;text-align:center}
+.fact + .fact{border-left:1px solid var(--hair)}
+.fact b{display:block;font-family:var(--font-display);font-weight:800;font-size:clamp(2.6rem,4vw,3.4rem);letter-spacing:-.04em;line-height:1}
+.fact:first-child b em{font-style:normal;color:var(--bronze);font-size:.62em;font-weight:700;letter-spacing:-.01em;margin-left:.15em}
+.fact:last-child b em{font-style:normal;color:var(--bronze);font-size:.62em;font-weight:700;letter-spacing:-.01em;margin-left:0}
+.fact b .count{font-size:1em;line-height:1}
+.fact>span{font-size:.8rem;color:var(--ink-3)}
+
+/* ---------- секции ---------- */
+.section{padding-block:clamp(5rem,10vw,8.5rem)}
+.sec-head{text-align:center;max-width:46rem;margin:0 auto clamp(3rem,6vw,4.5rem)}
+.sec-head h2{font-size:clamp(2.1rem,4.6vw,3.4rem);font-weight:800}
+.sec-head p{color:var(--ink-3);margin-top:1rem;font-size:1.05rem}
+
+/* ---------- о компании ---------- */
+.statement{font-family:var(--font-display);font-weight:700;letter-spacing:-.03em;font-size:clamp(1.5rem,3.4vw,2.5rem);line-height:1.25;text-align:center;max-width:56rem;margin:0 auto clamp(3rem,6vw,4.5rem)}
+.statement .dim{color:var(--ink-3)}
+.statement .hl{color:var(--bronze)}
+.about-duo{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.about-duo figure{border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/3;position:relative}
+.about-duo img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.about-duo figure:hover img{transform:scale(1.04)}
+.about-duo figcaption{position:absolute;left:1rem;bottom:1rem;padding:.45rem .9rem;border-radius:999px;background:rgba(23,14,8,.42);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--cream);font-size:.75rem;font-family:var(--font-display);font-weight:600}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:clamp(3rem,6vw,4.5rem)}
+.timeline li{border-top:1px solid var(--hair);padding-top:1.2rem;transition:border-color .4s}
+.timeline li:hover{border-color:var(--bronze)}
+.timeline .year{font-family:var(--font-display);font-weight:800;font-size:1.5rem;letter-spacing:-.02em;color:var(--bronze)}
+.timeline p{font-size:.88rem;color:var(--ink-3);margin-top:.4rem}
+
+/* ---------- меню: тёмная секция, 3 карточки в один ряд ---------- */
+.menu{background:var(--dark);color:var(--cream)}
+.menu .sec-head p{color:rgba(250,243,231,.6)}
+.menu .eyebrow{color:var(--honey)}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;align-items:stretch}
+.drink{background:var(--dark-2);border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column;transition:transform .5s var(--ease)}
+.drink:hover{transform:translateY(-6px)}
+.drink-img{overflow:hidden;aspect-ratio:16/10;position:relative}
+.drink-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.drink:hover .drink-img img{transform:scale(1.05)}
+.drink-tag{position:absolute;left:1rem;top:1rem;padding:.4rem .85rem;border-radius:999px;background:rgba(23,14,8,.45);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--honey);font-family:var(--font-display);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.drink-body{padding:1.6rem 1.6rem 1.8rem;display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;flex:1}
+.drink-body h3{font-size:1.25rem;font-weight:700}
+.drink-body p{font-size:.88rem;color:rgba(250,243,231,.62)}
+.drink-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;width:100%;padding-top:1rem}
+.price{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--honey)}
+.drink-meta{font-size:.75rem;color:rgba(250,243,231,.45)}
+
+/* ---------- атмосфера ---------- */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.gallery figure{border-radius:var(--r-md);overflow:hidden;aspect-ratio:3/4;position:relative}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.gallery figure:hover img{transform:scale(1.05)}
+.gallery figcaption{position:absolute;inset:auto 0 0 0;padding:2.6rem 1.2rem 1.1rem;background:linear-gradient(to top,rgba(23,14,8,.72),transparent);color:var(--cream);font-family:var(--font-display);font-weight:600;font-size:.85rem;letter-spacing:-.01em;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s var(--ease)}
+.gallery figure:hover figcaption{opacity:1;transform:none}
+.quote-box{max-width:52rem;margin:clamp(3.5rem,7vw,5.5rem) auto 0;text-align:center;display:grid;position:relative}
+.quote-slide{grid-area:1/1;opacity:0;transform:translateY(10px);transition:opacity .7s var(--ease),transform .7s var(--ease);pointer-events:none}
+.quote-slide.is-active{opacity:1;transform:none;pointer-events:auto}
+.quote-slide p{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;font-size:clamp(1.3rem,2.6vw,1.9rem);line-height:1.35}
+.quote-slide cite{display:block;font-style:normal;color:var(--ink-3);font-size:.88rem;margin-top:1.2rem}
+.quote-dots{display:flex;justify-content:center;gap:.5rem;margin-top:2rem}
+.quote-dots button{width:8px;height:8px;border-radius:50%;border:0;background:var(--hair);cursor:pointer;transition:background .3s,transform .3s}
+.quote-dots button.on{background:var(--bronze);transform:scale(1.3)}
+
+/* ---------- контакты ---------- */
+.contacts-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2.5rem,6vw,5rem);align-items:start}
+.spec{border-top:1px solid var(--hair)}
+.spec-row{display:flex;justify-content:space-between;gap:2rem;padding:1.15rem 0;border-bottom:1px solid var(--hair);transition:padding-left .3s var(--ease)}
+.spec-row:hover{padding-left:.5rem}
+.spec-row b{font-family:var(--font-display);font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);padding-top:.2rem}
+.spec-row div{font-size:.98rem;text-align:right}
+.spec-row a{font-weight:600;color:var(--bronze)}
+.contact-actions{display:flex;gap:1.6rem;align-items:center;margin-top:2.2rem;flex-wrap:wrap}
+.map-card{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:5/4;box-shadow:0 40px 80px -40px rgba(29,19,12,.35)}
+.map-card img{width:100%;height:100%;object-fit:cover;filter:sepia(.15) saturate(.9);transition:filter .6s,transform 1s var(--ease)}
+.map-card:hover img{filter:none;transform:scale(1.03)}
+.map-pin{position:absolute;top:44%;left:52%;width:22px;height:22px;z-index:2}
+.map-pin::before{content:'';position:absolute;inset:0;background:var(--honey);border:2.5px solid var(--dark);border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+@media (prefers-reduced-motion:no-preference){.map-pin{animation:pinBounce 1.8s ease-in-out infinite}}
+@keyframes pinBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.map-label{position:absolute;left:1.2rem;bottom:1.2rem;padding:.6rem 1.1rem;border-radius:999px;background:rgba(250,249,246,.8);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font-family:var(--font-display);font-weight:700;font-size:.8rem;letter-spacing:-.01em}
+
+/* ---------- подвал ---------- */
+.footer{border-top:1px solid var(--hair);padding:3rem 0 2.4rem}
+.footer-top{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;align-items:center}
+.footer nav{display:flex;gap:1.8rem;flex-wrap:wrap}
+.footer nav a{font-size:.8rem;color:var(--ink-3);transition:color .25s}
+.footer nav a:hover{color:var(--ink)}
+.footer small{display:block;margin-top:2rem;font-size:.75rem;color:var(--ink-3)}
+
+/* ---------- адаптив ---------- */
+@media (max-width:960px){
+  .burger{display:block}
+  .header-cta{display:none}
+  .main-nav{position:fixed;inset:0;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;transform:translateY(-102%);transition:transform .55s var(--ease);z-index:90}
+  body.nav-open .main-nav{transform:none}
+  .main-nav a{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--ink)}
+  .facts-grid{grid-template-columns:repeat(2,1fr)}
+  .fact:nth-child(3){border-left:0}
+  .fact:nth-child(n+3){border-top:1px solid var(--hair)}
+  .about-duo{grid-template-columns:1fr}
+  .timeline{grid-template-columns:repeat(2,1fr)}
+  .menu-grid{grid-template-columns:1fr;max-width:480px;margin-inline:auto}
+  .gallery{grid-template-columns:1fr;max-width:440px;margin-inline:auto}
+  .contacts-grid{grid-template-columns:1fr}
+  .hero-visual{aspect-ratio:16/10}
+}
+@media (max-width:560px){
+  .timeline{grid-template-columns:1fr}
+  .hero-actions{gap:1.2rem}
+  .chip--right{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .steam{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="nav-scrim" id="navScrim"></div>
+
+<header class="site-header" id="siteHeader">
+  <div class="container nav-wrap">
+    <a class="brand" href="#top" aria-label="На главную">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="25" fill="#E0A458"/>
+        <circle cx="32" cy="32" r="9" fill="#FAF9F6"/>
+        <path d="M18 24l6 3M42 19l5 4M45 41l6-2M21 44l6 1M33 13l4 4" stroke="#FAF9F6" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text">Два пончика<small>и чашка кофе</small></span>
+    </a>
+    <nav class="main-nav" id="mainNav" aria-label="Основная навигация">
+      <a href="#about">О нас</a><a href="#menu">Меню</a><a href="#vibe">Атмосфера</a><a href="#contacts">Контакты</a>
+    </nav>
+    <a class="btn btn--primary header-cta" href="#contacts">Забронировать</a>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ГЕРОЙ -->
+<section class="hero" id="top">
+  <div class="container">
+    <p class="eyebrow reveal">Специализированная кофейня · Москва</p>
+    <h1 class="reveal" style="--d:.08s">Два пончика.<br>Чашка кофе.<br><span class="accent">И день удался.</span></h1>
+    <p class="hero-sub reveal" style="--d:.16s">Жарим зерно сами. Печём пончики каждое утро. Наливаем кофе, ради которого хочется просыпаться.</p>
+    <div class="hero-actions reveal" style="--d:.24s">
+      <a class="btn btn--primary" href="#menu">Смотреть меню</a>
+      <a class="link-arrow" href="#contacts">Как нас найти</a>
+    </div>
+    <figure class="hero-visual kenburns reveal" style="--d:.3s">
+      <span class="steam" aria-hidden="true"><i></i><i></i><i></i></span>
+      <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/9aaa7c127-3152-4f4b-a862-73acc8f034e24313.png"
+           data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/8aaa7c127-3152-4f4b-a862-73acc8f034e21174.png"
+           alt="Чашка капучино с латте-артом на деревянном столе" width="1600" height="760">
+      <span class="chip chip--left"><span class="dot"></span>Раф «Два пончика» — напиток сезона</span>
+      <span class="chip chip--right">★ 4,9 · 1 200+ отзывов</span>
+    </figure>
+  </div>
+</section>
+
+<!-- ФАКТЫ -->
+<div class="facts">
+  <div class="container facts-grid">
+    <div class="fact reveal"><b><span class="count" data-count="9">9</span> <em>лет</em></b><span>у стойки бариста</span></div>
+    <div class="fact reveal" style="--d:.08s"><b><span class="count" data-count="350">350</span></b><span>чашек каждый день</span></div>
+    <div class="fact reveal" style="--d:.16s"><b><span class="count" data-count="27000">27 000</span></b><span>пончиков в год</span></div>
+    <div class="fact reveal" style="--d:.24s"><b>4<em>,9</em></b><span>средняя оценка гостей</span></div>
+  </div>
+</div>
+
+<!-- О КОМПАНИИ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Наша история</p>
+      <h2>Сделано с любовью.<br>И с кофеином.</h2>
+    </div>
+    <p class="statement reveal"><span class="dim">Мы начинали с тележки у метро и одной кофемашины.</span> Сегодня у нас собственная обжарка, печь для пончиков и <span class="hl">стойка, где помнят ваш заказ со второго визита.</span></p>
+    <div class="about-duo">
+      <figure class="reveal">
+        <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e28607.png"
+             data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/2aaa7c127-3152-4f4b-a862-73acc8f034e21623.png"
+             alt="Уютный зал кофейни: стойка с эспрессо-машиной и полки с посудой" loading="lazy" decoding="async" width="900" height="680">
+        <figcaption>Зал на Пекарской, 12</figcaption>
+      </figure>
+      <figure class="reveal" style="--d:.12s">
+        <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/6aaa7c127-3152-4f4b-a862-73acc8f034e22291.png"
+             data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/4aaa7c127-3152-4f4b-a862-73acc8f034e21235.png"
+             alt="Джутовые мешки со свежеобжаренными кофейными зёрнами" loading="lazy" decoding="async" width="900" height="680">
+        <figcaption>Собственная обжарка с 2022 года</figcaption>
+      </figure>
+    </div>
+    <ol class="timeline">
+      <li class="reveal"><span class="year">2016</span><p>Тележка у метро: 40 стаканов в день и мечта о своём зале.</p></li>
+      <li class="reveal" style="--d:.08s"><span class="year">2019</span><p>Первая кофейня и собственная печь для пончиков.</p></li>
+      <li class="reveal" style="--d:.16s"><span class="year">2022</span><p>Запустили обжарку — каждую партию жарим сами.</p></li>
+      <li class="reveal" style="--d:.24s"><span class="year">2026</span><p>Вторая точка и та же команда. Без компромиссов.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- МЕНЮ: три карточки в один ряд -->
+<section class="section menu" id="menu">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Фирменные напитки</p>
+      <h2>Три причины вернуться.</h2>
+      <p>Короткое меню, в котором всё — на своём месте.</p>
+    </div>
+    <div class="menu-grid">
+      <article class="drink reveal">
+        <div class="drink-img">
+          <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/0aaa7c127-3152-4f4b-a862-73acc8f034e29255.png"
+               data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e29089.png"
+               alt="Чашка рафа с латте-артом и глазурованный пончик на блюдце" loading="lazy" decoding="async" width="800" height="500">
+          <span class="drink-tag">Хит продаж</span>
+        </div>
+        <div class="drink-body">
+          <h3>Раф «Два пончика»</h3>
+          <p>Сливочный раф на домашнем сиропе из глазированного пончика. Корица, сахарная крошка и мини-пончик в подарок.</p>
+          <div class="drink-foot"><span class="price">340 ₽</span><span class="drink-meta">фирменный · 300 мл</span></div>
+        </div>
+      </article>
+
+      <article class="drink reveal" style="--d:.1s">
+        <div class="drink-img">
+          <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e29940.png"
+               data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/4aaa7c127-3152-4f4b-a862-73acc8f034e28873.png"
+               alt="Заваривание фильтр-кофе: вода из чайника льётся в воронку V60" loading="lazy" decoding="async" width="800" height="500">
+          <span class="drink-tag">Классика</span>
+        </div>
+        <div class="drink-body">
+          <h3>Фильтр «Утренняя смена»</h3>
+          <p>Зерно свежей обжарки. Воронка или аэропресс — три сорта каждый день.</p>
+          <div class="drink-foot"><span class="price">250 ₽</span><span class="drink-meta">чёрный · 250 мл</span></div>
+        </div>
+      </article>
+
+      <article class="drink reveal" style="--d:.2s">
+        <div class="drink-img">
+          <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/4aaa7c127-3152-4f4b-a862-73acc8f034e28699.png"
+               data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/2aaa7c127-3152-4f4b-a862-73acc8f034e28919.png"
+               alt="Густое какао с шапкой маршмелло и карамелью" loading="lazy" decoding="async" width="800" height="500">
+          <span class="drink-tag">Без кофеина</span>
+        </div>
+        <div class="drink-body">
+          <h3>Какао «Пончик без кофе»</h3>
+          <p>Бельгийский шоколад, маршмелло и домашняя карамель. Для всех, кто не про кофе.</p>
+          <div class="drink-foot"><span class="price">260 ₽</span><span class="drink-meta">для всех · 280 мл</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- АТМОСФЕРА -->
+<section class="section" id="vibe">
+  <div class="container">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Внутри у нас</p>
+      <h2>Атмосфера, ради которой остаются.</h2>
+    </div>
+    <div class="gallery">
+      <figure class="reveal">
+        <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/2aaa7c127-3152-4f4b-a862-73acc8f034e27494.png"
+             data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/5aaa7c127-3152-4f4b-a862-73acc8f034e24665.png"
+             alt="Столик у окна в кофейне: чашка кофе с паром и блокнот" loading="lazy" decoding="async" width="700" height="930">
+        <figcaption>Зал у окна — место для книги</figcaption>
+      </figure>
+      <figure class="reveal" style="--d:.1s">
+        <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/0aaa7c127-3152-4f4b-a862-73acc8f034e28611.png"
+             data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/5aaa7c127-3152-4f4b-a862-73acc8f034e25599.png"
+             alt="Свежие пончики в глазури и посыпке на решётке" loading="lazy" decoding="async" width="700" height="930">
+        <figcaption>Пончики из печи — к 8:30</figcaption>
+      </figure>
+      <figure class="reveal" style="--d:.2s">
+        <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/4aaa7c127-3152-4f4b-a862-73acc8f034e21282.png"
+             data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e26490.png"
+             alt="Руки бариста наливают молоко из питчера, рисуя латте-арт" loading="lazy" decoding="async" width="700" height="930">
+        <figcaption>Латте-арт в каждой чашке</figcaption>
+      </figure>
+    </div>
+
+    <div class="quote-box reveal" id="quoteBox">
+      <blockquote class="quote-slide is-active"><p>«Раф „Два пончика“ — это незаконно вкусно. Прихожу трижды в неделю.»</p><cite>— Аня, дизайнер</cite></blockquote>
+      <blockquote class="quote-slide"><p>«Лучший фильтр в районе. И пончики ещё тёплые к открытию.»</p><cite>— Игорь, фотограф</cite></blockquote>
+      <blockquote class="quote-slide"><p>«Место, где помнят, что ты пьёшь. Это дорогого стоит.»</p><cite>— Мария, студентка</cite></blockquote>
+      <blockquote class="quote-slide"><p>«Пришли на одну чашку — просидели три часа. Уютно, как дома.»</p><cite>— Сергей, разработчик</cite></blockquote>
+      <div class="quote-dots" role="tablist" aria-label="Отзывы"></div>
+    </div>
+  </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section class="section" id="contacts" style="padding-top:1rem">
+  <div class="container contacts-grid">
+    <div>
+      <div class="sec-head reveal" style="text-align:left;margin-bottom:2.4rem">
+        <p class="eyebrow">Контакты</p>
+        <h2>Заходите —<br>мы уже греем чашки.</h2>
+      </div>
+      <div class="spec reveal">
+        <div class="spec-row"><b>Адрес</b><div>Москва, ул. Пекарская, 12<br>метро «Чистые пруды», 4 минуты</div></div>
+        <div class="spec-row"><b>Телефон</b><div><a href="tel:+74951234567">+7 (495) 123-45-67</a></div></div>
+        <div class="spec-row"><b>Почта</b><div><a href="mailto:hello@2donuts.coffee">hello@2donuts.coffee</a></div></div>
+        <div class="spec-row"><b>Будни</b><div>8:00 – 22:00</div></div>
+        <div class="spec-row"><b>Выходные</b><div>9:00 – 23:00</div></div>
+      </div>
+      <div class="contact-actions reveal" style="--d:.1s">
+        <a class="btn btn--primary" href="tel:+74951234567">Забронировать столик</a>
+        <a class="link-arrow" href="https://yandex.ru/maps/?text=Москва,%20Пекарская%2012" target="_blank" rel="noopener">Проложить маршрут</a>
+      </div>
+    </div>
+    <figure class="map-card reveal" style="--d:.15s">
+      <img src="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/4aaa7c127-3152-4f4b-a862-73acc8f034e21760.png"
+           data-alt="https://image.qwenlm.ai/public_source/72720e6b-4fbc-4bbf-8574-cb456e2b25dc/3aaa7c127-3152-4f4b-a862-73acc8f034e21603.png"
+           alt="Карта мира на столе, две чашки кофе и дорожка из кофейных зёрен" loading="lazy" decoding="async" width="1000" height="800">
+      <span class="map-pin" aria-hidden="true"></span>
+      <figcaption class="map-label">Пекарская, 12 — мы здесь</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <a class="brand" href="#top">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="25" fill="#E0A458"/><circle cx="32" cy="32" r="9" fill="#FAF9F6"/>
+          <path d="M18 24l6 3M42 19l5 4M45 41l6-2M21 44l6 1" stroke="#FAF9F6" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-text">Два пончика<small>и чашка кофе</small></span>
+      </a>
+      <nav aria-label="Навигация в подвале">
+        <a href="#about">О нас</a><a href="#menu">Меню</a><a href="#vibe">Атмосфера</a><a href="#contacts">Контакты</a>
+      </nav>
+    </div>
+    <small>© 2026 Кофейня «Два пончика и чашка кофе». Сделано с любовью и кофеином. Все права защищены.</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* защита фото: основная ссылка → запасная → заглушка */
+  const CUP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M7 5c0-1 1-1 1-2M11 5c0-1 1-1 1-2"/></svg>';
+  function makePlaceholder(img){
+    const ph = document.createElement('div');
+    ph.className = 'img-ph';
+    ph.setAttribute('role','img');
+    ph.setAttribute('aria-label', img.alt || 'Фотография');
+    ph.innerHTML = CUP_SVG + '<span>' + (img.alt || 'фото скоро будет') + '</span>';
+    img.replaceWith(ph);
+  }
+  function rescue(img){
+    if (img.dataset.alt && !img.dataset.altTried){ img.dataset.altTried = '1'; img.src = img.dataset.alt; return; }
+    if (!img.dataset.failed){ img.dataset.failed = '1'; makePlaceholder(img); }
+  }
+  document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG') rescue(e.target); }, true);
+  setTimeout(() => { document.querySelectorAll('img').forEach(img => { if (!img.complete || img.naturalWidth === 0) rescue(img); }); }, 9000);
+
+  /* шапка */
+  const header = document.getElementById('siteHeader');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 12);
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* мобильное меню */
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('mainNav');
+  const scrim = document.getElementById('navScrim');
+  function closeNav(){ document.body.classList.remove('nav-open'); burger.setAttribute('aria-expanded','false'); }
+  burger.addEventListener('click', () => {
+    const open = document.body.classList.toggle('nav-open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  scrim.addEventListener('click', closeNav);
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+  /* reveal */
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion){
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -40px'});
+    reveals.forEach(el => io.observe(el));
+  } else { reveals.forEach(el => el.classList.add('in')); }
+
+  /* счётчики */
+  const fmt = n => n.toLocaleString('ru-RU');
+  const animateCount = el => {
+    const target = +el.dataset.count;
+    if (reduceMotion){ el.textContent = fmt(target); return; }
+    const dur = 1400, start = performance.now();
+    const tick = now => {
+      const p = Math.min((now - start)/dur, 1);
+      el.textContent = fmt(Math.round(target * (1 - Math.pow(1-p, 3))));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if ('IntersectionObserver' in window){
+    const cio = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); } });
+    }, {threshold:.6});
+    document.querySelectorAll('.count').forEach(el => cio.observe(el));
+  }
+
+  /* активный пункт меню */
+  const links = document.querySelectorAll('.main-nav a');
+  const aio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section[id]').forEach(s => aio.observe(s));
+
+  /* ротатор отзывов */
+  const box = document.getElementById('quoteBox');
+  const slides = box.querySelectorAll('.quote-slide');
+  const dotsWrap = box.querySelector('.quote-dots');
+  let qi = 0, qTimer;
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Отзыв ' + (i+1));
+    if (i === 0) b.classList.add('on');
+    b.addEventListener('click', () => { show(i); restart(); });
+    dotsWrap.appendChild(b);
+  });
+  function show(i){
+    qi = i;
+    slides.forEach((s, k) => s.classList.toggle('is-active', k === i));
+    dotsWrap.querySelectorAll('button').forEach((d, k) => d.classList.toggle('on', k === i));
+  }
+  function restart(){
+    if (reduceMotion) return;
+    clearInterval(qTimer);
+    qTimer = setInterval(() => show((qi + 1) % slides.length), 5000);
+  }
+  restart();
+})();
+</script>
+</body>
+</html>
